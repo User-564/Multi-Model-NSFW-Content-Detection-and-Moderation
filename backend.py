@@ -89,45 +89,27 @@ def normalize(word: str):
         word = word.replace(k, v)
 
     # -----------------------------
-    # 2. Replace masking symbols
-    # d**k → duuk
-    # m*****f****r → muuuufuuuor
-    # -----------------------------
-    word = re.sub(r"[\*\#\_]+", "u", word)
-
-    # -----------------------------
-    # 3. Remove non-alphanumeric
+    # 2. Remove non-alphanumeric
     # -----------------------------
     word = re.sub(r"[^a-z0-9]", "", word)
 
     # -----------------------------
-    # 4. Compress repeated letters
+    # 3. Compress repeated letters
     # fuuuuuck → fuuck
     # -----------------------------
     word = re.sub(r"(.)\1{2,}", r"\1\1", word)
 
     return word
 
-from difflib import SequenceMatcher
-
-def fuzzy_match(word, nsfw_terms):
-
-    for term in nsfw_terms:
-        similarity = SequenceMatcher(None, word, term).ratio()
-
-        if similarity > 0.75:
-            return True
-
-    return False
-
 
 
 def moderate_text(text: str):
 
-    clean_word = normalize(text)
+    clean_text = re.sub(r"[^a-z0-9\s]", " ", text.lower())
 
+    # 🔴 If ANY explicit word exists → replace whole sentence
     for term in NSFW_TERMS:
-        if term in clean_word or fuzzy_match(clean_word, NSFW_TERMS):
+        if term in clean_text:
             return choose_replacement(len(term))
 
     # otherwise keep original
@@ -153,7 +135,6 @@ async def text_moderation(data: TextRequest):
         "original": data.text,
         "moderated": moderated
     }
-
 
 
 # =====================================================
