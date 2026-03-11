@@ -4,7 +4,7 @@ torch
 transformers
 pillow
 requests
-python-dotenv
-pydantic
 pandas
 vosk
+pydantic
+sentencepiece
