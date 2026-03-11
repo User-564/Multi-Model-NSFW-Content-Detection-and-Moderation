@@ -341,6 +341,8 @@ async def receive_audio(request: Request):
 # =====================================================
 # IMAGE CLASSIFICATION API
 # =====================================================
+class ImageRequest(BaseModel):
+    imageUrl: str
 
 @app.post("/image")
 async def classify_image(request: Request):
