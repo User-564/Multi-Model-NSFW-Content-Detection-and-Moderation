@@ -1,10 +1,10 @@
 fastapi
 uvicorn
-pandas
-vosk
-pydantic
-python-multipart
-numpy
-opencv-python
 torch
 transformers
+pillow
+requests
+python-dotenv
+pydantic
+pandas
+vosk
