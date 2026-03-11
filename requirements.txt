@@ -1,8 +1,10 @@
-flask
-flask-cors
-pillow
-requests
-python-dotenv
-transformers
+fastapi
+uvicorn
+pandas
+vosk
+pydantic
+python-multipart
+numpy
+opencv-python
 torch
-gunicorn
+transformers
